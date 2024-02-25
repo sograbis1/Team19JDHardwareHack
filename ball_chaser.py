@@ -7,6 +7,7 @@ from gpiozero import LED
 import RPi.GPIO as GPIO
 import time
 led = LED(22)
+led_red = LED(21)
 
 vehicle = vehicle_module.Vehicle(
         {
@@ -29,10 +30,10 @@ vehicle = vehicle_module.Vehicle(
         }
     )
 
-HUE_VAL = 58    #targeted hue val
+HUE_VAL = 60   #targeted hue val
 
-lower_color = np.array([HUE_VAL-10,100,100])    #upper color threshold
-upper_color = np.array([HUE_VAL+10, 255, 255])    #lower color threshold
+lower_color = np.array([HUE_VAL-15,100,100])    #upper color threshold
+upper_color = np.array([HUE_VAL+15, 255, 255])    #lower color threshold
 
 # Initializing and configuring camera
 picam2 = Picamera2()
@@ -48,12 +49,12 @@ picam2.start()
 
 #defining area bounds for object detection
 minimum_area = 50
-maximum_area = 550000    #tolerance for the robot to stop
+maximum_area = 40000    #tolerance for the robot to stop
 #more calibration variables
 #forward_speed = 1
 #turn_speed = 0.7
 forward_speed = 1
-turn_speed = 0.3
+turn_speed = 0.4
 #def turnOnLED
 
 while True:
@@ -92,29 +93,34 @@ while True:
             if ball_location[1] > (center_image_x + (image_width/4)):
                 vehicle.pivot_left(turn_speed)
                 led.off()
+                led_red.on()
                 print("Turning left")
             elif ball_location[1] < (center_image_x - (image_width/4)):
                 vehicle.pivot_right(turn_speed)
                 led.off()
+                led_red.on()
                 print("Turning right")
             else:
-                
+                led_red.off()
                 vehicle.drive_forward(forward_speed)
-                time.sleep(0.3)
+                #time.sleep(0.3)
                 print("Forward")
                 led.on()
         elif (ball_location[0] < minimum_area):
             vehicle.pivot_left(turn_speed)
             led.off()
+            led_red.on()
             print("Target isn't large enough, searching")
         else:
             vehicle.stop()
             led.on()
+            led_red.off()
             print("Target large enough, stopping")
     else:
         vehicle.pivot_left(turn_speed)
         print("Target not found, searching")
         led.off()
+        led_red.on()
 
   # Exit condition
     if cv2.waitKey(10) & 0xFF == ord('q'):
