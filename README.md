@@ -5,3 +5,13 @@ This repository contains the problem and solution statements, code, and videos o
 
 **Solution Statement**: To solve this problem,  they decided to design an autonomous robot that uses computer vision to identify a tomato, chase after it and understand whether it is ripe or not (red or green). If it detects an unripe tomato, it will move towards it and turn on its green LED. While designing and building the vehicle, the group of farmers ran into some trouble with their pi hat and had to pivot to using a breadboard. With that being said, they were able to hook up their raspberry pi, ultrasonic sensors, and camera successfully to complete the task. 
 
+**Videos**
+
+**Screen Recording**
+https://github.com/sograbis1/Team19JDHardwareHack/assets/156969491/ee2462e7-d71f-4091-b364-f2008f46407a
+
+**Detecting a Tomato**
+
+**Detecting an Unripe Tomato**
+
+**Detecting a Ripe Tomato**
